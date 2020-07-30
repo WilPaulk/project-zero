@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void Update()
   {
-
+    // gets input from controller every frame
     if (Input.GetAxisRaw("Horizontal") > .2)
     {
       horizontalMove = 1f;
@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
   private void FixedUpdate ()
   {
+    //calls controller 
     controller.Move (horizontalMove * Time.fixedDeltaTime, jump);
     jump = false;
     animator.SetFloat("speed", Mathf.Abs(horizontalMove));
