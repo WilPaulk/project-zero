@@ -25,7 +25,171 @@ public class PlayerInput : MonoBehaviour
     //grabs needed components from player object and calculates physics
     controller = GetComponent<Controller2D>();
     animator = GetComponent<Animator>();
-    gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
     jumpVelocity = Mathf.Abs(gravity) * timeToJumpApex;
   }
 
@@ -48,11 +212,11 @@ public class PlayerInput : MonoBehaviour
     // resets velocity to 0 to stop gravity accumulation when at rest
     if (controller.collisions.above || controller.collisions.below)
     {
-      velocity.y = 0;
+      velocity.y = 0f;
     }
 
     // sets jump if jump conditions are met
-    if (Input.GetButtonDown("Jump") && controller.collisions.below)
+    if (Input.GetButtonDown("Jump") && controller.collisions.grounded)
     {
       jump = jumpVelocity;
     }
@@ -60,14 +224,14 @@ public class PlayerInput : MonoBehaviour
 
   void FixedUpdate()
   {
-    //takes in relavent vars to determine movement and calls move function each frame
+    //takes in relavent vars to determine movement and calls move function as fixed intervals
     velocity.x = horizontalMove * moveSpeed;
     velocity.y += (gravity * Time.fixedDeltaTime) + jump;
     jump = 0f;
     controller.Move(velocity * Time.fixedDeltaTime);
 
     // sets animator parameters each frame
-    animator.SetBool("grounded", controller.collisions.below);
+    animator.SetBool("grounded", controller.collisions.grounded);
     animator.SetFloat("speed", Mathf.Abs(horizontalMove))  ;
     animator.SetFloat("yvelocity", velocity.y);
   }

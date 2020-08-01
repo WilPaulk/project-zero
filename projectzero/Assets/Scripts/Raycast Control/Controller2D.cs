@@ -61,7 +61,23 @@ public class Controller2D : MonoBehaviour
       VerticalCollisions (ref velocity);
     }
 
+    ApexGroundFix();
+
     transform.Translate (velocity);
+  }
+
+  private void ApexGroundFix()
+  {
+    //adds boxcast ray detection to the bottom of the player to determine if we are grounded; this grounded variable does not affect movement but controls animations and jumping ability. Appears to weork for now but some fine tuning and box drawing might be required.
+    float groundTolerance = .1f;
+    Bounds bounds = moveCollider.bounds;
+    bounds.Expand(skin * -2);
+
+    RaycastHit2D hit = Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, groundTolerance, collisionMask);
+    if (hit.collider != null)
+    {
+      collisions.grounded = true;
+    }
   }
 
   void HorizontalCollisions(ref Vector3 velocity)
@@ -133,6 +149,7 @@ public class Controller2D : MonoBehaviour
       velocity.y = climbVelocityY;
       velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
       collisions.below = true;
+      collisions.grounded = true;
       collisions.climbingSlope = true;
       collisions.slopeAngle = slopeAngle;
     }
@@ -140,6 +157,7 @@ public class Controller2D : MonoBehaviour
 
   void DescendSlope (ref Vector3 velocity)
   {
+    // detect whether the player is moving down a slope and if so controls adjustments to velocity accordingly
     float directionX = Mathf.Sign(velocity.x);
     Vector2 rayOrigin = (directionX == -1)? raycastOrigins.bottomRight:raycastOrigins.bottomLeft;
     RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, Mathf.Infinity, collisionMask);
@@ -149,10 +167,13 @@ public class Controller2D : MonoBehaviour
       float slopeAngle = Vector2.Angle(hit.normal , Vector2.up);
       if (slopeAngle != 0f && slopeAngle <= maxDescendAngle)
       {
+        // checks to see if the downward slope is going in the same direction that our player is moving
         if (Mathf.Sign(hit.normal.x) == directionX)
         {
+          // checks to see if our player will hit that slope with current velocity
           if (hit.distance - skin <=  Mathf.Tan(slopeAngle * Mathf.Deg2Rad) * Mathf.Abs(velocity.x))
           {
+            //recalculates velocity and set relevant collision bools
             float moveDistance = Mathf.Abs(velocity.x);
             float descendVelocityY = Mathf.Sin(slopeAngle * Mathf.Deg2Rad) * moveDistance;
             velocity.x = Mathf.Cos(slopeAngle * Mathf.Deg2Rad) * moveDistance * Mathf.Sign(velocity.x);
@@ -161,6 +182,7 @@ public class Controller2D : MonoBehaviour
             collisions.slopeAngle = slopeAngle;
             collisions.descendingSlope = true;
             collisions.below = true;
+            collisions.grounded = true;
           }
         }
       }
@@ -193,6 +215,7 @@ public class Controller2D : MonoBehaviour
         // update collisions struct bools
         collisions.below = directionY == -1;
         collisions.above = directionY == 1;
+        collisions.grounded = collisions.below;
       }
     }
     // if we are climbing a slope
@@ -262,6 +285,7 @@ public class Controller2D : MonoBehaviour
     // stores info on collisions detected and provides a method for resetting all bools in struct
     public bool above, below;
     public bool left, right;
+    public bool grounded;
     public bool climbingSlope;
     public float slopeAngle, slopeAngleOld;
     public bool descendingSlope;
@@ -271,6 +295,7 @@ public class Controller2D : MonoBehaviour
     {
       above = below = false;
       left = right = false;
+      grounded = false;
       climbingSlope = false;
       descendingSlope = false;
       slopeAngleOld = slopeAngle;
