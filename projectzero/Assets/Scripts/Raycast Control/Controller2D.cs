@@ -9,23 +9,28 @@ public class Controller2D : MonoBehaviour
   public int verticalRayCount = 4;
   public float maxClimbAngle = 70f;
   public float maxDescendAngle = 70f;
+  public bool faceRight = true;
 
   // private vars
   private const float skin = .015f;
+  private float groundTolerance;
+  private float runTolerance = .1f;
+  private float dashTolerance = .1f;
   private float horizontalRaySpace;
   private float verticalRaySpace;
-  private bool faceRight = true;
 
   // unity components and custom structs
   public LayerMask collisionMask;
   public BoxCollider2D moveCollider;
   private RaycastOrigins raycastOrigins;
   public CollisionInfo collisions;
+  public PlayerInput input;
 
   void Start()
   {
     // assigns box collider for ray origins and calculates spacing
     moveCollider = GetComponent<BoxCollider2D>();
+    input = GetComponent<PlayerInput>();
     CalculateRaySpace();
   }
 
@@ -33,6 +38,7 @@ public class Controller2D : MonoBehaviour
   {
     // calls ray origins method, resets collision bools, calls flip method, and sets x and y velocity if moving
     UpdateRaycastOrigins();
+    SetGroundTolerance();
     collisions.Reset();
     collisions.velocityOld = velocity;
 
@@ -61,15 +67,32 @@ public class Controller2D : MonoBehaviour
       VerticalCollisions (ref velocity);
     }
 
+    if (input.stillDash > 0f && collisions.wasGrounded && !collisions.climbingSlope && !collisions.descendingSlope && !collisions.grounded)
+      {
+        DashGround(ref velocity);
+      }
+
     ApexGroundFix();
 
     transform.Translate (velocity);
   }
 
+  private void SetGroundTolerance()
+  {
+    // increases grounding tolerance when dashing to accomodate for greater speeds over sharp peaks
+    if (input.stillDash >0)
+    {
+      groundTolerance = runTolerance + dashTolerance;
+    }
+    else
+    {
+      groundTolerance = runTolerance;
+    }
+  }
+
   private void ApexGroundFix()
   {
     //adds boxcast ray detection to the bottom of the player to determine if we are grounded; this grounded variable does not affect movement but controls animations and jumping ability. Appears to weork for now but some fine tuning and box drawing might be required.
-    float groundTolerance = .1f;
     Bounds bounds = moveCollider.bounds;
     bounds.Expand(skin * -2);
 
@@ -77,6 +100,32 @@ public class Controller2D : MonoBehaviour
     if (hit.collider != null)
     {
       collisions.grounded = true;
+    }
+  }
+
+  private void DashGround(ref Vector3 velocity)
+  {
+    // casts an angled ray from the front of the player in direction of movement and adjusts y velocity accordingly to give a greater ability to stay snapped to the ground when dashing; uses 306090 triangle
+    float longSide = verticalRaySpace + skin + groundTolerance;
+    float shortSide = longSide / Mathf.Sqrt(3f);
+    float hypoSide = shortSide * 3f;
+    Vector2 rayOrigin = (faceRight)? raycastOrigins.bottomRight:raycastOrigins.bottomLeft;
+    rayOrigin += (Vector2.up * verticalRaySpace);
+    Vector2 rayDirection = (faceRight)? new Vector2 (1, -1 * Mathf.Sqrt(3)): new Vector2 (-1, -1 * Mathf.Sqrt(3));
+    RaycastHit2D hit = Physics2D.Raycast(rayOrigin, rayDirection, hypoSide, collisionMask);
+
+    if (hit)
+    {
+      float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
+      if (slopeAngle <= maxClimbAngle)
+      {
+        collisions.grounded = true;
+        float correction = ((hit.distance / 2f) * Mathf.Sqrt(3f)) - (verticalRaySpace + skin);
+        if (correction > 0f)
+        {
+          velocity.y -= correction;
+        }
+      }
     }
   }
 
@@ -286,6 +335,7 @@ public class Controller2D : MonoBehaviour
     public bool above, below;
     public bool left, right;
     public bool grounded;
+    public bool wasGrounded;
     public bool climbingSlope;
     public float slopeAngle, slopeAngleOld;
     public bool descendingSlope;
@@ -295,6 +345,7 @@ public class Controller2D : MonoBehaviour
     {
       above = below = false;
       left = right = false;
+      wasGrounded = grounded;
       grounded = false;
       climbingSlope = false;
       descendingSlope = false;
