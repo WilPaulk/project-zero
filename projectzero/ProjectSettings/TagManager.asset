@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - Background
-  - Background Assets
+  - 
+  - nope
   - Platforms
   - Sprites
   - Foreground
-  - 
-  - 
+  - Background Assets
+  - Background Image
   - 
   - 
   - 
@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: backgroundimage
+    uniqueID: 1908443763
+    locked: 0
+  - name: background
+    uniqueID: 1850988107
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

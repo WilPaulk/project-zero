@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
   public float timeToJumpApex = .6f;
   public float timeToDoubleJumpApex = .6f;
   public float stillDash;
+  public float dashCooldownTime = 10f;
 
   //private vars
   private float jumpVelocity;
@@ -26,6 +27,8 @@ public class PlayerInput : MonoBehaviour
   private bool doubleJumpReady = false;
   private float dash;
   private bool dashAnim;
+  private bool dashReady = false;
+  private float dashCooldown = 0f;
   private Vector3 velocity;
 
   //unity components
@@ -47,11 +50,11 @@ public class PlayerInput : MonoBehaviour
   void Update()
   {
     //gets controller input and translates to standard values every frame
-    if (Input.GetAxisRaw("Horizontal") > .2)
+    if (Input.GetAxisRaw("Horizontal") > .2 && dashCooldown == 0f)
     {
       horizontalMove = 1f;
     }
-    else if (Input.GetAxisRaw("Horizontal") < -.2)
+    else if (Input.GetAxisRaw("Horizontal") < -.2 && dashCooldown == 0f)
     {
       horizontalMove = -1f;
     }
@@ -67,7 +70,7 @@ public class PlayerInput : MonoBehaviour
     }
 
     //allows double jump if in the air and have already jumped - based on this design you cannot double jump from a fall
-    if (Input.GetButtonDown("Jump") && doubleJumpReady && !controller.collisions.grounded)
+    if (Input.GetButtonDown("Jump") && doubleJumpReady && !controller.collisions.grounded && dashCooldown == 0f)
     {
       jump = doubleJumpVelocity;
       doubleJumpAnim = true;
@@ -75,15 +78,16 @@ public class PlayerInput : MonoBehaviour
     }
 
     // sets jump if jump conditions are met
-    if (Input.GetButtonDown("Jump") && controller.collisions.grounded)
+    if (Input.GetButtonDown("Jump") && controller.collisions.grounded && dashCooldown == 0f)
     {
       jump = jumpVelocity;
       doubleJumpReady = true;
     }
 
     // enables dashing and sets dash speed
-    if (Input.GetButtonDown("Dash") && stillDash == 0f)
+    if (Input.GetButtonDown("Dash") && stillDash == 0f && dashReady && dashCooldown == 0f)
     {
+      dashReady = false;
       if (controller.faceRight)
       {
         dash = dashSpeed;
@@ -120,12 +124,24 @@ public class PlayerInput : MonoBehaviour
       {
         dash = 0f;
         dashAnim = false;
+        if (controller.collisions.grounded)
+        {
+          dashCooldown = dashCooldownTime;
+        }
       }
     }
     else
     {
       velocity.x = (horizontalMove * moveSpeed);
       velocity.y += (gravity * Time.fixedDeltaTime) + jump;
+      if (controller.collisions.grounded)
+      {
+        dashReady = true;
+      }
+      if (dashCooldown >= 1f)
+      {
+        dashCooldown -= 1f;
+      }
     }
 
     jump = 0f;

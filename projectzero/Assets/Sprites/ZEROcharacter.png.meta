@@ -92,6 +92,30 @@ TextureImporter:
   - first:
       213: -2203467248622134738
     second: ZEROcharacter_29
+  - first:
+      213: -2532622968555807456
+    second: ZEROcharacter_30
+  - first:
+      213: -4451504831875660948
+    second: ZEROcharacter_31
+  - first:
+      213: 8281378921125243069
+    second: ZEROcharacter_32
+  - first:
+      213: -3021791822878239202
+    second: ZEROcharacter_33
+  - first:
+      213: -1266467943061107857
+    second: ZEROcharacter_34
+  - first:
+      213: 6313927046271400596
+    second: ZEROcharacter_35
+  - first:
+      213: 6026074225970142121
+    second: ZEROcharacter_36
+  - first:
+      213: -105419308390776129
+    second: ZEROcharacter_37
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -217,7 +241,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -238,7 +262,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 76
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -259,7 +283,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 152
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -280,7 +304,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 228
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -301,7 +325,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 304
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -322,7 +346,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 380
-        y: 304
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -342,8 +366,8 @@ TextureImporter:
       name: ZEROcharacter_6
       rect:
         serializedVersion: 2
-        x: 0
-        y: 228
+        x: 456
+        y: 380
         width: 76
         height: 76
       alignment: 0
@@ -363,8 +387,8 @@ TextureImporter:
       name: ZEROcharacter_7
       rect:
         serializedVersion: 2
-        x: 76
-        y: 228
+        x: 0
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -384,8 +408,8 @@ TextureImporter:
       name: ZEROcharacter_8
       rect:
         serializedVersion: 2
-        x: 152
-        y: 228
+        x: 76
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -405,8 +429,8 @@ TextureImporter:
       name: ZEROcharacter_9
       rect:
         serializedVersion: 2
-        x: 228
-        y: 228
+        x: 152
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -426,8 +450,8 @@ TextureImporter:
       name: ZEROcharacter_10
       rect:
         serializedVersion: 2
-        x: 304
-        y: 228
+        x: 228
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -447,8 +471,8 @@ TextureImporter:
       name: ZEROcharacter_11
       rect:
         serializedVersion: 2
-        x: 380
-        y: 228
+        x: 304
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -468,8 +492,8 @@ TextureImporter:
       name: ZEROcharacter_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 152
+        x: 380
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -489,8 +513,8 @@ TextureImporter:
       name: ZEROcharacter_13
       rect:
         serializedVersion: 2
-        x: 76
-        y: 152
+        x: 456
+        y: 304
         width: 76
         height: 76
       alignment: 0
@@ -510,8 +534,8 @@ TextureImporter:
       name: ZEROcharacter_14
       rect:
         serializedVersion: 2
-        x: 152
-        y: 152
+        x: 0
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -531,8 +555,8 @@ TextureImporter:
       name: ZEROcharacter_15
       rect:
         serializedVersion: 2
-        x: 228
-        y: 152
+        x: 76
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -552,8 +576,8 @@ TextureImporter:
       name: ZEROcharacter_16
       rect:
         serializedVersion: 2
-        x: 304
-        y: 152
+        x: 152
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -573,8 +597,8 @@ TextureImporter:
       name: ZEROcharacter_17
       rect:
         serializedVersion: 2
-        x: 380
-        y: 152
+        x: 228
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -594,8 +618,8 @@ TextureImporter:
       name: ZEROcharacter_18
       rect:
         serializedVersion: 2
-        x: 0
-        y: 76
+        x: 304
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -615,8 +639,8 @@ TextureImporter:
       name: ZEROcharacter_19
       rect:
         serializedVersion: 2
-        x: 76
-        y: 76
+        x: 380
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -636,8 +660,8 @@ TextureImporter:
       name: ZEROcharacter_20
       rect:
         serializedVersion: 2
-        x: 152
-        y: 76
+        x: 456
+        y: 228
         width: 76
         height: 76
       alignment: 0
@@ -657,8 +681,8 @@ TextureImporter:
       name: ZEROcharacter_21
       rect:
         serializedVersion: 2
-        x: 228
-        y: 76
+        x: 0
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -678,8 +702,8 @@ TextureImporter:
       name: ZEROcharacter_22
       rect:
         serializedVersion: 2
-        x: 304
-        y: 76
+        x: 76
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -699,8 +723,8 @@ TextureImporter:
       name: ZEROcharacter_23
       rect:
         serializedVersion: 2
-        x: 380
-        y: 76
+        x: 152
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -720,8 +744,8 @@ TextureImporter:
       name: ZEROcharacter_24
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 228
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -741,8 +765,8 @@ TextureImporter:
       name: ZEROcharacter_25
       rect:
         serializedVersion: 2
-        x: 76
-        y: 0
+        x: 304
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -762,8 +786,8 @@ TextureImporter:
       name: ZEROcharacter_26
       rect:
         serializedVersion: 2
-        x: 152
-        y: 0
+        x: 380
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -783,8 +807,8 @@ TextureImporter:
       name: ZEROcharacter_27
       rect:
         serializedVersion: 2
-        x: 228
-        y: 0
+        x: 456
+        y: 152
         width: 76
         height: 76
       alignment: 0
@@ -804,8 +828,8 @@ TextureImporter:
       name: ZEROcharacter_28
       rect:
         serializedVersion: 2
-        x: 304
-        y: 0
+        x: 0
+        y: 76
         width: 76
         height: 76
       alignment: 0
@@ -825,8 +849,8 @@ TextureImporter:
       name: ZEROcharacter_29
       rect:
         serializedVersion: 2
-        x: 380
-        y: 0
+        x: 76
+        y: 76
         width: 76
         height: 76
       alignment: 0
@@ -838,6 +862,174 @@ TextureImporter:
       bones: []
       spriteID: e2a9bab3636bb61e0800000000000000
       internalID: -2203467248622134738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_30
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02d5c3914d05adcd0800000000000000
+      internalID: -2532622968555807456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_31
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c63cd14c0f31932c0800000000000000
+      internalID: -4451504831875660948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_32
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db8e31c804e5de270800000000000000
+      internalID: 8281378921125243069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_33
+      rect:
+        serializedVersion: 2
+        x: 380
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e169924e8507016d0800000000000000
+      internalID: -3021791822878239202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_34
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 76
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6b4c66ad1a9c6ee0800000000000000
+      internalID: -1266467943061107857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49afcba22339f9750800000000000000
+      internalID: 6313927046271400596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_36
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 0
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ab561db49ae0a350800000000000000
+      internalID: 6026074225970142121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ZEROcharacter_37
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 0
+        width: 76
+        height: 76
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb286e292b9798ef0800000000000000
+      internalID: -105419308390776129
       vertices: []
       indices: 
       edges: []
