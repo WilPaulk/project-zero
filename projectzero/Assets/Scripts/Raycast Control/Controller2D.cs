@@ -92,7 +92,7 @@ public class Controller2D : MonoBehaviour
 
   private void ApexGroundFix()
   {
-    //adds boxcast ray detection to the bottom of the player to determine if we are grounded; this grounded variable does not affect movement but controls animations and jumping ability. Appears to weork for now but some fine tuning and box drawing might be required.
+    //adds boxcast ray detection to the bottom of the player to determine if we are grounded; this grounded variable does not affect movement but controls animations and jumping ability. Appears to work for now but some fine tuning and box drawing might be required.
     Bounds bounds = moveCollider.bounds;
     bounds.Expand(skin * -2);
 
