@@ -30,6 +30,7 @@ public class PlayerInput : MonoBehaviour
   private bool dashReady = false;
   private float dashCooldown = 0f;
   private Vector3 velocity;
+  private bool doubleJumpActive;
 
   //unity components
   public Animator animator;
@@ -75,6 +76,8 @@ public class PlayerInput : MonoBehaviour
       jump = doubleJumpVelocity;
       doubleJumpAnim = true;
       doubleJumpReady = false;
+      // i'm an idiot
+      velocity.y = 0f;
     }
 
     // sets jump if jump conditions are met

@@ -1,37 +1,25 @@
 ﻿using UnityEngine;
 
-// requires a box collider for rays to be calculated from
-[RequireComponent (typeof (BoxCollider2D))]
-public class Controller2D : MonoBehaviour
+public class Controller2D : RaycastController
 {
   // public vars
-  public int horizontalRayCount = 4;
-  public int verticalRayCount = 4;
   public float maxClimbAngle = 70f;
   public float maxDescendAngle = 70f;
   public bool faceRight = true;
 
   // private vars
-  private const float skin = .015f;
   private float groundTolerance;
   private float runTolerance = .1f;
   private float dashTolerance = .1f;
-  private float horizontalRaySpace;
-  private float verticalRaySpace;
 
   // unity components and custom structs
-  public LayerMask collisionMask;
-  public BoxCollider2D moveCollider;
-  private RaycastOrigins raycastOrigins;
   public CollisionInfo collisions;
   public PlayerInput input;
 
-  void Start()
+  public override void Start()
   {
-    // assigns box collider for ray origins and calculates spacing
-    moveCollider = GetComponent<BoxCollider2D>();
+    base.Start();
     input = GetComponent<PlayerInput>();
-    CalculateRaySpace();
   }
 
   public void Move(Vector3 velocity)
@@ -74,6 +62,8 @@ public class Controller2D : MonoBehaviour
 
     ApexGroundFix();
 
+    //velocity.x = (Mathf.RoundToInt(velocity.x * 32f)) / 32f;
+    //velocity.y = (Mathf.RoundToInt(velocity.y * 32f)) / 32f;
     transform.Translate (velocity);
   }
 
@@ -288,31 +278,6 @@ public class Controller2D : MonoBehaviour
     }
   }
 
-  void UpdateRaycastOrigins()
-  {
-    // checks the bounds of game objects box collider and calculates origins of rays based on bounds of that collider and skin width
-    Bounds bounds = moveCollider.bounds;
-    bounds.Expand (skin * -2);
-
-    raycastOrigins.bottomLeft = new Vector2 (bounds.min.x, bounds.min.y);
-    raycastOrigins.bottomRight = new Vector2 (bounds.max.x, bounds.min.y);
-    raycastOrigins.topLeft = new Vector2 (bounds.min.x, bounds.max.y);
-    raycastOrigins.topRight = new Vector2 (bounds.max.x, bounds.max.y);
-  }
-
-  void CalculateRaySpace()
-  {
-    //calculates spacing between rays using bounds of game objects box collider, skin width, and number of rays (min of 2 required)
-    Bounds bounds = moveCollider.bounds;
-    bounds.Expand (skin * -2);
-
-    horizontalRayCount = Mathf.Clamp(horizontalRayCount, 2, int.MaxValue);
-    verticalRayCount = Mathf.Clamp(verticalRayCount, 2, int.MaxValue);
-
-    horizontalRaySpace = bounds.size.y / (horizontalRayCount - 1);
-    verticalRaySpace = bounds.size.x / (verticalRayCount -1);
-  }
-
   private void Flip ()
   {
     // flips the character left and right and updates bool that determines which direction the character is facing
@@ -320,13 +285,6 @@ public class Controller2D : MonoBehaviour
     Vector2 theScale = transform.localScale;
     theScale.x *= -1;
     transform.localScale = theScale;
-  }
-
-  struct RaycastOrigins
-  {
-    //stores info on ray origins
-    public Vector2 topLeft, topRight;
-    public Vector2 bottomLeft, bottomRight;
   }
 
   public struct CollisionInfo
