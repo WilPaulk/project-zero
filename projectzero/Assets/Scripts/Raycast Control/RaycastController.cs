@@ -7,7 +7,7 @@ public class RaycastController : MonoBehaviour
   // public vars
   public int horizontalRayCount = 4;
   public int verticalRayCount = 4;
-  public const float skin = .015f;
+  public const float skin = .015625f;
   [HideInInspector] public float horizontalRaySpace;
   [HideInInspector] public float verticalRaySpace;
 

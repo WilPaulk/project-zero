@@ -64,12 +64,6 @@ public class PlayerInput : MonoBehaviour
       horizontalMove = 0f;
     }
 
-    // resets velocity to 0 to stop gravity accumulation when at rest
-    if (controller.collisions.above || controller.collisions.below)
-    {
-      velocity.y = 0f;
-    }
-
     //allows double jump if in the air and have already jumped - based on this design you cannot double jump from a fall
     if (Input.GetButtonDown("Jump") && doubleJumpReady && !controller.collisions.grounded && dashCooldown == 0f)
     {
@@ -106,6 +100,12 @@ public class PlayerInput : MonoBehaviour
 
   void FixedUpdate()
   {
+    // resets velocity to 0 to stop gravity accumulation when at rest
+    if (controller.collisions.above || controller.collisions.below)
+    {
+      velocity.y = 0f;
+    }
+
     //takes in relavent vars to determine movement and calls move function at fixed intervals; additionally handles timing of certain movement abilities
     if (Mathf.Abs(dash) > 0f)
     {

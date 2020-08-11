@@ -9,7 +9,7 @@ public class Controller2D : RaycastController
 
   // private vars
   private float groundTolerance;
-  private float runTolerance = .1f;
+  private float runTolerance = .015625f;
   private float dashTolerance = .1f;
 
   // unity components and custom structs
@@ -22,7 +22,7 @@ public class Controller2D : RaycastController
     input = GetComponent<PlayerInput>();
   }
 
-  public void Move(Vector3 velocity)
+  public void Move(Vector3 velocity, bool platformGrounded = false, bool playerInput = true)
   {
     // calls ray origins method, resets collision bools, calls flip method, and sets x and y velocity if moving
     UpdateRaycastOrigins();
@@ -52,7 +52,10 @@ public class Controller2D : RaycastController
 
     if (velocity.y != 0)
     {
-      VerticalCollisions (ref velocity);
+      if (playerInput)
+      {
+        VerticalCollisions (ref velocity);
+      }
     }
 
     if (input.stillDash > 0f && collisions.wasGrounded && !collisions.climbingSlope && !collisions.descendingSlope && !collisions.grounded)
@@ -62,9 +65,14 @@ public class Controller2D : RaycastController
 
     ApexGroundFix();
 
-    //velocity.x = (Mathf.RoundToInt(velocity.x * 32f)) / 32f;
-    //velocity.y = (Mathf.RoundToInt(velocity.y * 32f)) / 32f;
+    if (platformGrounded)
+    {
+      collisions.below = true;
+      collisions.grounded = true;
+    }
+
     transform.Translate (velocity);
+
   }
 
   private void SetGroundTolerance()
@@ -133,6 +141,10 @@ public class Controller2D : RaycastController
 
       if (hit)
       {
+        if (hit.distance == 0f)
+        {
+          continue;
+        }
         //for any horizontal hit angle is captured
         float slopeAngle = Vector2.Angle(hit.normal, Vector2.up);
         //if that angle is hit by the bottom ray and is climbable
