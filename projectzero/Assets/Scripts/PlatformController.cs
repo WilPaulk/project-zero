@@ -2,24 +2,30 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// now extends raycast controller
 public class PlatformController : RaycastController
 {
-  public LayerMask passengerMask;
-  private Vector3 velocity;
+  // public vars
   public float speed;
-  private int fromWaypointIndex;
-  private float percentBetweenWaypoints;
   public bool cyclic;
   public float delay;
-  private float nextMove;
   [Range(0,2)] public float platSmoothing;
 
+  // private vars
+
+  private int fromWaypointIndex;
+  private float percentBetweenWaypoints;
+  private float nextMove;
+
+  // unity components, lists, and structs
+  public LayerMask passengerMask;
+  private Vector3 velocity;
   public Vector3[] localWaypoints;
   Vector3[] globalWaypoints;
-
   List<PassengerMovement> passengerMovement;
   Dictionary<Transform, Controller2D> passengerDictionary = new Dictionary<Transform, Controller2D>();
 
+  // calls base class start method and sets global waypoints in reference to the local waypoints set in the editor
   public override void Start()
   {
     base.Start();
@@ -32,6 +38,7 @@ public class PlatformController : RaycastController
 
   void FixedUpdate()
   {
+    // updates raycast origins, sets velocity with calculation method, rounds velocity to nearest pixel and then moves passengers and platforms depending on priority
     UpdateRaycastOrigins();
     velocity = CalculatePlatformMovement();
     velocity.x = (Mathf.RoundToInt(velocity.x * 32f)) / 32f;
@@ -48,12 +55,14 @@ public class PlatformController : RaycastController
 
   float PlatSmooth(float x)
   {
+    // uses a power function so that platforms start and stop slowly and reach max velocity in the middle of their path
     float a = platSmoothing + 1f;
     return Mathf.Pow(x,a) / (Mathf.Pow(x, a) + Mathf.Pow(1f-x, a));
   }
 
   Vector3 CalculatePlatformMovement()
   {
+    // a bit of a complicated one here - it effectively interpolates platform positions based on speed and composite vectors made by comparing the two adjacent waypoints. also contains logic for iterating through waypoints based on either reverse paths or cycles depending on preference set in editor. it handles platform delay and calls the platform smoothing method in line. after all of the math, it returns a velocity to move both the platforms and passengers.
     if (Time.time < nextMove)
     {
       return Vector3.zero;
@@ -101,6 +110,7 @@ public class PlatformController : RaycastController
 
   void MovePassengers (bool beforeMovePlatform)
   {
+    // grabs controller script of any passengers and moves them using move method based on platform velocity - uses a passenger dictionary to store controllers so that we aren't making multiple expensive calls - passes in false in the move call to disable vertical collision detection which causes smooth falling bugs and prevents calling the flip method
     foreach (PassengerMovement passenger in passengerMovement)
     {
       if (!passengerDictionary.ContainsKey(passenger.transform))
@@ -116,6 +126,7 @@ public class PlatformController : RaycastController
 
   void CalculatePassengerMovementPre(Vector3 velocity)
   {
+    // calculates passenger movement for any movement type where passenger takes priority over platform movement (e.g. pushes) - types of movement called out in comments below - uses a hashset to prevent moving passengers twice when they are hit by multiple rays - stores passenger movements in a list to be used by the move passengers method
     HashSet<Transform> movedPassengers = new HashSet<Transform>();
     passengerMovement = new List<PassengerMovement>();
     float directionX = Mathf.Sign(velocity.x);
@@ -148,6 +159,7 @@ public class PlatformController : RaycastController
 
   void CalculatePassengerMovementPost(Vector3 velocity)
   {
+    // calculates passenger movement for any movement type where platform takes priority over passenger movement (e.g. pulls) - types of movement called out in comments below - uses a hashset to prevent moving passengers twice when they are hit by multiple rays - stores passenger movements in a list to be used by the move passengers method
     HashSet<Transform> movedPassengers = new HashSet<Transform>();
     passengerMovement = new List<PassengerMovement>();
     float directionX = Mathf.Sign(velocity.x);
@@ -178,11 +190,13 @@ public class PlatformController : RaycastController
   }
   struct PassengerMovement
   {
+    // stores data on passenger movement calculated by passenger movement calculation mathods in a custom object which is populated in passenger movement list and used to call move method
     public Transform transform;
     public Vector3 velocity;
     public bool platformGrounded;
     public bool moveBeforePlatform;
 
+    // structor for creating passenger movement objects
     public PassengerMovement(Transform _transform, Vector3 _velocity, bool _platformGrounded, bool _moveBeforePlatform)
     {
       transform = _transform;
@@ -194,6 +208,7 @@ public class PlatformController : RaycastController
 
   void OnDrawGizmos()
   {
+    // will disable later - draws waypoints for platforms on screen for better visualization of platform paths and locations during level construction
     if (localWaypoints != null)
     {
       Gizmos.color = Color.red;

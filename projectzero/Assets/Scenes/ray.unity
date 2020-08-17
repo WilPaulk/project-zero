@@ -28031,16 +28031,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   moveCollider: {fileID: 0}
+  speed: 4
+  cyclic: 1
+  delay: 0.5
+  platSmoothing: 0.87
   passengerMask:
     serializedVersion: 2
     m_Bits: 2048
-  speed: 3
-  cyclic: 0
-  delay: 3
-  platSmoothing: 0
   localWaypoints:
   - {x: 0, y: 0, z: 0}
-  - {x: -3, y: 0, z: 0}
+  - {x: -7, y: 0, z: 0}
   - {x: -3, y: 3, z: 0}
   - {x: 0, y: 3, z: 0}
 --- !u!61 &975081602
@@ -28236,13 +28236,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985174561}
-  m_LocalRotation: {x: 0.013832042, y: 0.02354304, z: 0.8618815, w: 0.5063741}
+  m_LocalRotation: {x: 0, y: 0, z: 0.86204076, w: 0.50683904}
   m_LocalPosition: {x: -11.87, y: -1.07, z: 0}
   m_LocalScale: {x: 20, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -1.5230001, y: 2.7340002, z: 119.093}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 119.093}
 --- !u!1 &1122896825
 GameObject:
   m_ObjectHideFlags: 0
@@ -31295,6 +31295,9 @@ MonoBehaviour:
   timeToDoubleJumpApex: 0.3
   stillDash: 0
   dashCooldownTime: 20
+  wallSlideMaxSpeed: 5
+  wallJumpVelocity: {x: 18, y: 23}
+  sideJumpSmooth: 2
   animator: {fileID: 0}
   controller: {fileID: 0}
 --- !u!114 &2140294723
@@ -31317,8 +31320,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   moveCollider: {fileID: 2140294726}
-  maxClimbAngle: 80
-  maxDescendAngle: 80
+  maxClimbAngle: 65
+  maxDescendAngle: 65
   faceRight: 1
   input: {fileID: 0}
 --- !u!212 &2140294724
@@ -31381,7 +31384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2140294721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.35, y: 13.65, z: 0}
+  m_LocalPosition: {x: -17.48, y: 11.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -14,6 +14,9 @@ public class PlayerInput : MonoBehaviour
   public float timeToDoubleJumpApex = .6f;
   public float stillDash;
   public float dashCooldownTime = 10f;
+  public float wallSlideMaxSpeed = 5f;
+  public Vector2 wallJumpVelocity;
+  public float sideJumpSmooth;
 
   //private vars
   private float jumpVelocity;
@@ -31,6 +34,9 @@ public class PlayerInput : MonoBehaviour
   private float dashCooldown = 0f;
   private Vector3 velocity;
   private bool doubleJumpActive;
+  private bool wallSliding;
+  private float sideJump;
+  private float doubleJumpReset;
 
   //unity components
   public Animator animator;
@@ -64,6 +70,17 @@ public class PlayerInput : MonoBehaviour
       horizontalMove = 0f;
     }
 
+    //adds logic for wall sliding which will enable new animations and wall jumping
+    wallSliding = false;
+    if ((controller.collisions.left || controller.collisions.right) && !controller.collisions.below && velocity.y < 0f)
+    {
+      wallSliding = true;
+      if (velocity.y < -wallSlideMaxSpeed)
+      {
+        velocity.y = -wallSlideMaxSpeed;
+      }
+    }
+
     //allows double jump if in the air and have already jumped - based on this design you cannot double jump from a fall
     if (Input.GetButtonDown("Jump") && doubleJumpReady && !controller.collisions.grounded && dashCooldown == 0f)
     {
@@ -74,11 +91,23 @@ public class PlayerInput : MonoBehaviour
       velocity.y = 0f;
     }
 
-    // sets jump if jump conditions are met
+    // sets jump if jump conditions are met - also added logic for wall jumping -  added a bug fix to disable a double jump after storing one by single jumping and falling off a ledge, uses double jump apex * 2 so that if we change the timing of the jump this reset works automatically
     if (Input.GetButtonDown("Jump") && controller.collisions.grounded && dashCooldown == 0f)
     {
       jump = jumpVelocity;
       doubleJumpReady = true;
+      doubleJumpReset = Time.time + (2f * timeToJumpApex);
+    }
+    if (Time.time >= doubleJumpReset)
+    {
+      doubleJumpReady = false;
+    }
+
+    if (Input.GetButtonDown("Jump") && wallSliding)
+    {
+      sideJump = ((controller.faceRight)? -1f:1f) * wallJumpVelocity.x;
+      velocity.y = 0f;
+      jump = wallJumpVelocity.y;
     }
 
     // enables dashing and sets dash speed
@@ -135,7 +164,7 @@ public class PlayerInput : MonoBehaviour
     }
     else
     {
-      velocity.x = (horizontalMove * moveSpeed);
+      velocity.x = (horizontalMove * moveSpeed) + sideJump;
       velocity.y += (gravity * Time.fixedDeltaTime) + jump;
       if (controller.collisions.grounded)
       {
@@ -147,7 +176,18 @@ public class PlayerInput : MonoBehaviour
       }
     }
 
+    // resets jump and adds editable smoothing to side jump since it is not smoothly decreased by gravity like a vertical jump
     jump = 0f;
+    if (Mathf.Abs(sideJump) > 0f)
+    {
+      float sideSign = Mathf.Sign(sideJump);
+      sideJump = (Mathf.Abs(sideJump) - sideJumpSmooth) * sideSign;
+
+      if (Mathf.Abs(sideJump) <= 0f)
+      {
+        sideJump = 0f;
+      }
+    }
     controller.Move(velocity * Time.fixedDeltaTime);
 
     // sets animator parameters each frame
@@ -156,6 +196,7 @@ public class PlayerInput : MonoBehaviour
     animator.SetFloat("yvelocity", velocity.y);
     animator.SetBool("doublejump", doubleJumpAnim);
     animator.SetBool("dash", dashAnim);
+    animator.SetBool("wall slide", wallSliding);
     doubleJumpAnim = false;
   }
 }

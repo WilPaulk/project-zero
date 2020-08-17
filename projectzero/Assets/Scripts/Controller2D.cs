@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// now extends raycast controller
 public class Controller2D : RaycastController
 {
   // public vars
@@ -30,12 +31,13 @@ public class Controller2D : RaycastController
     collisions.Reset();
     collisions.velocityOld = velocity;
 
-    if (velocity.x > 0 && !faceRight)
+    //added a bug fix to only call flip if move was called as a result of player input to stop switching directions when on a moving platform
+    if (velocity.x > 0 && !faceRight && playerInput)
     {
       Flip();
     }
 
-    if (velocity.x < 0 && faceRight)
+    if (velocity.x < 0 && faceRight && playerInput)
     {
       Flip();
     }
