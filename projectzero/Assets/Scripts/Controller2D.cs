@@ -23,7 +23,12 @@ public class Controller2D : RaycastController
     input = GetComponent<PlayerInput>();
   }
 
-  public void Move(Vector3 velocity, bool platformGrounded = false, bool playerInput = true)
+  public void Move(Vector3 velocity, bool platformGrounded, bool playerInput)
+  {
+    Move(velocity, platformGrounded, false, playerInput);
+  }
+
+  public void Move(Vector3 velocity, bool platformGrounded, bool fall, bool playerInput)
   {
     // calls ray origins method, resets collision bools, calls flip method, and sets x and y velocity if moving
     UpdateRaycastOrigins();
@@ -56,11 +61,11 @@ public class Controller2D : RaycastController
     {
       if (playerInput)
       {
-        VerticalCollisions (ref velocity);
+        VerticalCollisions (ref velocity, fall);
       }
     }
 
-    if (input.stillDash > 0f && collisions.wasGrounded && !collisions.climbingSlope && !collisions.descendingSlope && !collisions.grounded)
+    if (Time.time <= input.stillDash && collisions.wasGrounded && !collisions.climbingSlope && !collisions.descendingSlope && !collisions.grounded)
       {
         DashGround(ref velocity);
       }
@@ -94,9 +99,11 @@ public class Controller2D : RaycastController
   {
     //adds boxcast ray detection to the bottom of the player to determine if we are grounded; this grounded variable does not affect movement but controls animations and jumping ability. Appears to work for now but some fine tuning and box drawing might be required.
     Bounds bounds = moveCollider.bounds;
-    bounds.Expand(skin * -2);
+    bounds.Expand(skin * -1f);
+    Vector2 groundCenter = new Vector2(bounds.center.x, bounds.min.y);
+    Vector2 groundSize = new Vector2(bounds.size.x, skin);
 
-    RaycastHit2D hit = Physics2D.BoxCast(bounds.center, bounds.size, 0f, Vector2.down, groundTolerance, collisionMask);
+    RaycastHit2D hit = Physics2D.BoxCast(groundCenter, groundSize, 0f, Vector2.down, groundTolerance, collisionMask);
     if (hit.collider != null)
     {
       collisions.grounded = true;
@@ -143,6 +150,10 @@ public class Controller2D : RaycastController
 
       if (hit)
       {
+        if (hit.collider.tag == "through")
+        {
+          continue;
+        }
         if (hit.distance == 0f)
         {
           continue;
@@ -242,7 +253,7 @@ public class Controller2D : RaycastController
     }
   }
 
-  void VerticalCollisions(ref Vector3 velocity)
+  void VerticalCollisions(ref Vector3 velocity, bool fall)
   {
     // checks if there are collisions with platform colliders in direction of vertical movement withing velocity range for current frame and adjusts velocity so that it does not exceed that range for each ray iteratively; also updates collision bools
     float directionY = Mathf.Sign (velocity.y);
@@ -256,6 +267,18 @@ public class Controller2D : RaycastController
 
       if (hit)
       {
+        if (hit.collider.tag == "through")
+        {
+          if (directionY ==1f || hit.distance == 0f)
+          {
+            continue;
+          }
+          if (fall)
+          {
+            continue;
+          }
+        }
+
         velocity.y = (hit.distance - skin) * directionY;
         rayLength = hit.distance;
 

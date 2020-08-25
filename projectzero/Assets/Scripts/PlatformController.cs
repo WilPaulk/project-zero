@@ -36,7 +36,7 @@ public class PlatformController : RaycastController
     }
   }
 
-  void FixedUpdate()
+  void Update()
   {
     // updates raycast origins, sets velocity with calculation method, rounds velocity to nearest pixel and then moves passengers and platforms depending on priority
     UpdateRaycastOrigins();
@@ -77,7 +77,7 @@ public class PlatformController : RaycastController
       }
     }
     float distanceBetweenWaypoints = Vector3.Distance(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex]);
-    percentBetweenWaypoints += Time.fixedDeltaTime * speed/distanceBetweenWaypoints;
+    percentBetweenWaypoints += Time.deltaTime * speed/distanceBetweenWaypoints;
     percentBetweenWaypoints = Mathf.Clamp(percentBetweenWaypoints, 0f, 1f);
     float smoothedPercentBetweenWaypoints = PlatSmooth(percentBetweenWaypoints);
     Vector3 newPos = Vector3.Lerp(globalWaypoints[fromWaypointIndex], globalWaypoints[toWaypointIndex], smoothedPercentBetweenWaypoints);
@@ -143,7 +143,7 @@ public class PlatformController : RaycastController
         rayOrigin += Vector2.right * (verticalRaySpace * i);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, passengerMask);
 
-        if(hit)
+        if(hit && hit.distance != 0f)
         {
           if (!movedPassengers.Contains(hit.transform))
           {
@@ -175,7 +175,7 @@ public class PlatformController : RaycastController
         Vector2 rayOrigin = raycastOrigins.topLeft + (Vector2.right * (verticalRaySpace * i));
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up, rayLength, passengerMask);
 
-        if(hit)
+        if(hit && hit.distance != 0f)
         {
           if (!movedPassengers.Contains(hit.transform))
           {
