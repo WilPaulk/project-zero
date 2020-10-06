@@ -28282,7 +28282,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   moveCollider: {fileID: 0}
-  speed: 10
+  speed: 7
   cyclic: 1
   delay: 0.5
   platSmoothing: 0.87
@@ -31377,7 +31377,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794040407}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8, y: 20.39, z: 0}
+  m_LocalPosition: {x: 1.8, y: 19.15, z: 0}
   m_LocalScale: {x: 2.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -31576,7 +31576,7 @@ MonoBehaviour:
   stillDash: 0
   dashCooldownTime: 1
   wallSlideMaxSpeed: 5
-  wallJumpVelocity: {x: 18, y: 23}
+  wallJumpVelocity: {x: 50, y: 23}
   sideJumpSmooth: 2
   animator: {fileID: 0}
   controller: {fileID: 0}

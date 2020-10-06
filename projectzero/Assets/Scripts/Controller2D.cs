@@ -269,7 +269,7 @@ public class Controller2D : RaycastController
       {
         if (hit.collider.tag == "through")
         {
-          if (directionY ==1f || hit.distance == 0f)
+          if (directionY == 1f || hit.distance == 0f)
           {
             continue;
           }
